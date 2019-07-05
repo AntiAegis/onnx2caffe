@@ -50,11 +50,17 @@ def _convert_conv(node, graph, err):
     pads = node.attrs.get("pads", [0, 0, 0, 0])
     strides = node.attrs["strides"]
 
+    if len(strides)==1:
+        stride_h = stride_w = strides[0]
+    else:
+        stride_h = strides[0]
+        stride_w = strides[1]
+
     layer = myf("Convolution", node_name, [input_name], [output_name],
-                kernel_h = kernel_shape[0],kernel_w = kernel_shape[1],
-                stride_h=strides[0], stride_w = strides[1], group = groups,
-                pad_h = pads[0], pad_w = pads[1],
-                num_output=W.shape[0],  dilation = dilations[0], bias_term = bias_flag)
+                kernel_h=kernel_shape[0], kernel_w=kernel_shape[1],
+                stride_h=stride_h, stride_w=stride_w, group=groups,
+                pad_h=pads[0], pad_w=pads[1],
+                num_output=W.shape[0], dilation=dilations[0], bias_term=bias_flag)
 
     graph.channel_dims[output_name] = W.shape[0]
     return layer
