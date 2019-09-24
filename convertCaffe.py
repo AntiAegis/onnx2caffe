@@ -1,23 +1,20 @@
 #------------------------------------------------------------------------------
 #  Libraries
 #------------------------------------------------------------------------------
-from __future__ import print_function
-import argparse
-import sys
-import caffe
-import onnx
 import numpy as np
+import argparse, sys, caffe, onnx, importlib
+
 from caffe.proto import caffe_pb2
 caffe.set_mode_cpu()
-from onnx2caffe._transformers import ConvAddFuser,ConstantsToInitializers
-from onnx2caffe._graph import Graph
 
+from onnx import shape_inference
+from onnx2caffe._graph import Graph
 import onnx2caffe._operators as cvt
 import onnx2caffe._weightloader as wlr
 from onnx2caffe._error_utils import ErrorHandling
+from onnx2caffe._transformers import ConvAddFuser,ConstantsToInitializers
+
 from collections import OrderedDict
-from onnx import shape_inference
-import importlib
 
 transformers = [
 	ConstantsToInitializers(),
