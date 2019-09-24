@@ -125,4 +125,4 @@ if __name__ == "__main__":
 	# Convert ONNX to Caffe
 	graph = getGraph(onnx_path)
 	convertToCaffe(graph, prototxt_path, caffemodel_path)
-	print("Export ONNX to Caffe done")
+	print("Converted Caffe model is saved at %s and %s" % (prototxt_path, caffemodel_path))
